@@ -4,62 +4,67 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Services\AuthService;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    protected $authService;
+
+    public function __construct(AuthService $authService)
     {
-        //
+        $this->authService = $authService;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function register(Request $request)
     {
-        //
+        $request->validate([
+            'nom' => 'required|string',
+            'prenom' => 'required|string',
+            'email' => 'required|string|email|unique:users',
+            'password' => 'required|string|confirmed',
+            'role' => 'required|in:candidat,recruteur,admin',
+        ]);
+
+        $user = $this->authService->register($request->all());
+       
+        return response()->json(['user' => $user], 201);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function login(Request $request)
     {
-        //
+        $request->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|string',
+        ]);
+
+        $user = $this->authService->login($request->only('email', 'password'));
+
+        if (!$user) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $token = Auth::guard('api')->login($user);
+
+        return response()->json(['token' => $token]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function resetPassword(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|string|confirmed',
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        $user = $this->authService->login($request->email);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $this->authService->modifierMotDePasse($user, $request->password);
+
+        return response()->json(['message' => 'Password reset successfully']);
     }
 }
+
