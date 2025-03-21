@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\AuthService;
 use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Facades\JWTAuth;  
 
 class AuthController extends Controller
 {
@@ -22,7 +23,7 @@ class AuthController extends Controller
             'nom' => 'required|string',
             'prenom' => 'required|string',
             'email' => 'required|string|email|unique:users',
-            'password' => 'required|string|confirmed',
+            'password' => 'required',
             'role' => 'required|in:candidat,recruteur,admin',
         ]);
 
@@ -38,15 +39,13 @@ class AuthController extends Controller
             'password' => 'required|string',
         ]);
 
-        $user = $this->authService->login($request->only('email', 'password'));
-
-        if (!$user) {
-            return response()->json(['message' => 'Unauthorized'], 401);
+        $credentials = $request->only('email', 'password');
+        
+        if ($token = JWTAuth::attempt($credentials)) {
+            return response()->json(['token' => $token]);
         }
 
-        $token = Auth::guard('api')->login($user);
-
-        return response()->json(['token' => $token]);
+        return response()->json(['message' => 'Unauthorized'], 401);
     }
 
     public function resetPassword(Request $request)
@@ -66,5 +65,11 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Password reset successfully']);
     }
-}
 
+    public function me(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate(); 
+
+        return response()->json(['user' => $user]);
+    }
+}
