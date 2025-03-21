@@ -5,6 +5,7 @@ namespace App\Services;
 
 use App\Repositories\UserRepositoryInterface;
 use Illuminate\Support\Facades\Hash;
+use Tymon\JWTAuth\Facades\JWTAuth;  
 
 class AuthService
 {
@@ -35,6 +36,16 @@ class AuthService
     public function modifierMotDePasse($user, string $newPassword)
     {
         $this->userRepository->modifierMotDePasse($user, $newPassword);
+    }
+
+    public function logout()
+    {
+        JWTAuth::parseToken()->invalidate();
+    }
+
+    public function refreshToken()
+    {
+        return JWTAuth::parseToken()->refresh();
     }
 }
 

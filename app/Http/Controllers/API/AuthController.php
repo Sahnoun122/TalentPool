@@ -36,7 +36,7 @@ class AuthController extends Controller
     {
         $request->validate([
             'email' => 'required|string|email',
-            'password' => 'required|string',
+            'password' => 'required',
         ]);
 
         $credentials = $request->only('email', 'password');
@@ -52,7 +52,7 @@ class AuthController extends Controller
     {
         $request->validate([
             'email' => 'required|string|email',
-            'password' => 'required|string|confirmed',
+            'password' => 'required',
         ]);
 
         $user = $this->authService->login($request->email);
