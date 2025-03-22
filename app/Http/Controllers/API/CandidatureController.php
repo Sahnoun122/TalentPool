@@ -4,6 +4,8 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Validator;
+
 use App\Services\CandidatureService;
 
 class CandidatureController extends Controller
@@ -18,10 +20,10 @@ class CandidatureController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'annonce_id' => 'required|exists:annonces,id',
-            'candidat_id' => 'required|exists:candidats,id',
+            'annonce_id' => '1',
+            'candidat_id' => '1',
             'cv_path' => 'required|string',
-            'lettre_motivation' => 'required|string',
+            'lettre_motivation_path' => 'required|string',
         ]);
 
         $candidature = $this->candidatureService->postuler($request->all());

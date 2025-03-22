@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Annonce;
 use App\Models\User;
 
-class Candidature extends Model
+class Candidatures extends Model
 {
     protected $fillable = [
         'annonce_id', 'candidat_id', 'cv_path', 'lettre_motivation', 'statut'

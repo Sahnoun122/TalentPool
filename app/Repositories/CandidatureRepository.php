@@ -1,29 +1,29 @@
 <?php
 namespace App\Repositories;
 
-use App\Models\Candidature;
+use App\Models\Candidatures;
 use App\Repositories\CandidatureRepositoryInterface;
 
 class CandidatureRepository implements CandidatureRepositoryInterface
 {
     public function trouverParId(int $id)
     {
-        return Candidature::findOrFail($id);
+        return Candidatures::findOrFail($id);
     }
 
     public function trouverParAnnonceId(int $annonceId)
     {
-        return Candidature::where('annonce_id', $annonceId)->get();
+        return Candidatures::where('annonce_id', $annonceId)->get();
     }
 
     public function AjouterCandidature(array $donnees)
     {
-        return Candidature::create($donnees);
+        return Candidatures::create($donnees);
     }
 
     public function supprimerCandidature(int $id)
     {
-        $candidature = Candidature::findOrFail($id);
+        $candidature = Candidatures::findOrFail($id);
         $candidature->delete();
     }
 }
