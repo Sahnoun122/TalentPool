@@ -41,4 +41,15 @@ class CandidatureController extends Controller
         $this->candidatureService->retirerCandidature($id);
         return response()->json(null, 204);
     }
+
+
+    public function modifierStatut(Request $request, int $id)
+    {
+        $request->validate([
+            'statut' => 'required',
+        ]);
+
+        $candidature = $this->candidatureService->mettreStatut($id, $request->statut);
+        return response()->json($candidature);
+    }
 }

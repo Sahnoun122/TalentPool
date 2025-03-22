@@ -28,3 +28,5 @@ Route::apiResource('annonces', AnnonceController::class);
 Route::post('candidatures', [CandidatureController::class, 'store']);
 Route::delete('candidatures/{id}', [CandidatureController::class, 'destroy']);
 Route::get('annonces/{annonceId}/candidatures', [CandidatureController::class, 'index']);
+
+Route::put('candidatures/{id}/statut', [CandidatureController::class, 'modifierStatut']);
