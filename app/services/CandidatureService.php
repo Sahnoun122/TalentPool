@@ -39,5 +39,16 @@ class CandidatureService
 
         return $candidature;
     }
+
+
+    public function NombreCandidatures(int $recruteurId)
+    {
+        return $this->candidatureRepository->compterRecruteur($recruteurId);
+    }
+
+    public function obtenirRepartitionCandidaturesParStatut(int $recruteurId)
+    {
+        return $this->candidatureRepository->repartirStatut($recruteurId);
+    }
 }
 
