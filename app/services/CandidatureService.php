@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\CandidatureRepositoryInterface;
+use App\Events\CandidatureStatutModifie;
 
 class CandidatureService
 {
@@ -26,6 +27,17 @@ class CandidatureService
     public function filtrerCandidatures(int $annonceId)
     {
         return $this->candidatureRepository->trouverParAnnonceId($annonceId);
+    }
+
+    public function mettreStatut(int $id, string $statut)
+    {
+        $candidature = $this->candidatureRepository->trouverParId($id);
+        $candidature->statut = $statut;
+        $candidature->save();
+
+        event(new CandidatureStatutModifie($candidature));
+
+        return $candidature;
     }
 }
 
