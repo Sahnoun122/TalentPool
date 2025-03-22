@@ -66,13 +66,6 @@ class AuthController extends Controller
         return response()->json(['message' => 'Password reset successfully']);
     }
 
-    public function me(Request $request)
-    {
-        $user = JWTAuth::parseToken()->authenticate(); 
-
-        return response()->json(['user' => $user]);
-    }
-
     public function logout(Request $request)
     {
         $this->authService->logout();
