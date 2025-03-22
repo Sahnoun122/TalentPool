@@ -37,5 +37,6 @@ class AnnonceService
     {
         return $this->annonceRepository->compterRecruteur($recruteurId);
     }
+
 }
 

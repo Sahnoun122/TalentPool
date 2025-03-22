@@ -27,21 +27,23 @@ class CandidatureRepository implements CandidatureRepositoryInterface
         $candidature->delete();
     }
 
-    public function compterRecruteur( $recruteurId)
-    {
-        return Candidatures::whereHas('annonce', function ($query) use ($recruteurId) {
-            $query->where('recruteur_id', $recruteurId);
-        })->count();
-    }
+      public function compterRecruteur( $recruteurId)
+      {
+          return Candidatures::whereHas('annonce', function ($query) use ($recruteurId) {
+              $query->where('recruteur_id', $recruteurId);
+          })->count();
+      }
+  
+      public function repartirStatut( $recruteurId)
+      {
+          return Candidatures::whereHas('annonce', function ($query) use ($recruteurId) {
+              $query->where('recruteur_id', $recruteurId);
+          })
+          ->select('statut')
+          ->selectRaw('count(*) as total')
+          ->groupBy('statut')
+          ->get();
+      }
+  
 
-    public function repartirStatut( $recruteurId)
-    {
-        return Candidatures::whereHas('annonce', function ($query) use ($recruteurId) {
-            $query->where('recruteur_id', $recruteurId);
-        })
-        ->select('statut')
-        ->selectRaw('count(*) as total')
-        ->groupBy('statut')
-        ->get();
-    }
 }

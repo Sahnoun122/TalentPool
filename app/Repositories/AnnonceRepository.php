@@ -39,4 +39,9 @@ class AnnonceRepository implements AnnonceRepositoryInterface
     {
         return Annonce::where('recruteur_id', $recruteurId)->count();
     }
+
+    public function compterToute()
+    {
+        return Annonce::count();
+    }
 }
