@@ -5,8 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\AuthService;
-use Illuminate\Support\Facades\Auth;
-use Tymon\JWTAuth\Facades\JWTAuth;  
+use Tymon\JWTAuth\Facades\JWTAuth;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -23,12 +23,12 @@ class AuthController extends Controller
             'nom' => 'required|string',
             'prenom' => 'required|string',
             'email' => 'required|string|email|unique:users',
-            'password' => 'required',
+            'password' => 'required|string',
             'role' => 'required|in:candidat,recruteur,admin',
         ]);
 
         $user = $this->authService->register($request->all());
-       
+
         return response()->json(['user' => $user], 201);
     }
 
@@ -36,7 +36,7 @@ class AuthController extends Controller
     {
         $request->validate([
             'email' => 'required|string|email',
-            'password' => 'required',
+            'password' => 'required|string',
         ]);
 
         $credentials = $request->only('email', 'password');
@@ -52,10 +52,10 @@ class AuthController extends Controller
     {
         $request->validate([
             'email' => 'required|string|email',
-            'password' => 'required',
+            'password' => 'required|string', 
         ]);
 
-        $user = $this->authService->login($request->email);
+        $user = User::where('email', $request->email)->first();
 
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);
@@ -68,13 +68,18 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        $this->authService->logout();
+        JWTAuth::invalidate(JWTAuth::getToken());
+
         return response()->json(['message' => 'Successfully logged out']);
     }
 
     public function refresh(Request $request)
     {
-        $token = $this->authService->refreshToken();
-        return response()->json(['token' => $token]);
+        try {
+            $token = JWTAuth::refresh(JWTAuth::getToken());
+            return response()->json(['token' => $token]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Token refresh failed'], 401);
+        }
     }
 }
