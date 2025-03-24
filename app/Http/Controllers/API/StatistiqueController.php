@@ -18,11 +18,11 @@ class StatistiqueController extends Controller
         $this->candidatureService = $candidatureService;
     }
 
-    public function statistiquesRecruteur(int $recruteurId)
+    public function statistiquesAdmin()
     {
-        $nombreAnnonces = $this->annonceService->NombreAnnonces($recruteurId);
-        $nombreCandidatures = $this->candidatureService->NombreCandidatures($recruteurId);
-        $repartitionCandidatures = $this->candidatureService->CandidaturesStatut($recruteurId);
+        $nombreAnnonces = $this->annonceService->NombreAnnonces();
+        $nombreCandidatures = $this->candidatureService->NombreCandidatures();
+        $repartitionCandidatures = $this->candidatureService->CandidaturesStatut();
 
         return response()->json([
             'nombre_annonces' => $nombreAnnonces,
@@ -31,3 +31,17 @@ class StatistiqueController extends Controller
         ]);
     }
 }
+
+// public function statistiquesAdmin()
+// {
+//     // Assuming you want to gather statistics for the entire application or admin-level data
+//     $nombreAnnonces = $this->annonceService->NombreAnnoncesAdmin();
+//     $nombreCandidatures = $this->candidatureService->NombreCandidaturesAdmin();
+//     $repartitionCandidatures = $this->candidatureService->CandidaturesStatutAdmin();
+
+//     return response()->json([
+//         'nombre_annonces' => $nombreAnnonces,
+//         'nombre_candidatures' => $nombreCandidatures,
+//         'repartition_candidatures' => $repartitionCandidatures,
+//     ]);
+// }

@@ -35,9 +35,9 @@ class AnnonceRepository implements AnnonceRepositoryInterface
         $annonce->delete();
     }
 
-    public function compterRecruteur(int $recruteurId)
+    public function compterRecruteur()
     {
-        return Annonce::where('recruteur_id', $recruteurId)->count();
+        return Annonce::where('recruteur_id')->count();
     }
 
     public function compterToute()

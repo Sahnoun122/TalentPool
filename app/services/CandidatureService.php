@@ -40,14 +40,14 @@ class CandidatureService
         return $candidature;
     }
 
-  public function NombreCandidatures( $recruteurId)
+  public function NombreCandidatures()
   {
-      return $this->candidatureRepository->compterRecruteur($recruteurId);
+      return $this->candidatureRepository->compterRecruteur();
   }
 
-  public function CandidaturesStatut(int $recruteurId)
+  public function CandidaturesStatut()
   {
-      return $this->candidatureRepository->repartirStatut($recruteurId);
+      return $this->candidatureRepository->repartirStatut();
   }
 
 }

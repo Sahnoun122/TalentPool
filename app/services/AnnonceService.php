@@ -33,9 +33,9 @@ class AnnonceService
         return $this->annonceRepository->supprimerAnnonce($id);
     }
 
-    public function NombreAnnonces(int $recruteurId)
+    public function NombreAnnonces()
     {
-        return $this->annonceRepository->compterRecruteur($recruteurId);
+        return $this->annonceRepository->compterRecruteur();
     }
 
 }
