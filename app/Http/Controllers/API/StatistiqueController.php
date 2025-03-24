@@ -18,7 +18,6 @@ class StatistiqueController extends Controller
         $this->candidatureService = $candidatureService;
     }
 
-    // Obtenir les statistiques pour un recruteur
     public function statistiquesRecruteur(int $recruteurId)
     {
         $nombreAnnonces = $this->annonceService->NombreAnnonces($recruteurId);

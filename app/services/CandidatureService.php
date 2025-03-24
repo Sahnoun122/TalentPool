@@ -2,14 +2,14 @@
 
 namespace App\Services;
 
-use App\Repositories\CandidatureRepositoryInterface;
+use App\Repositories\CandidatureRepository;
 use App\Events\CandidatureStatutModifie;
 
 class CandidatureService
 {
     protected $candidatureRepository;
 
-    public function __construct(CandidatureRepositoryInterface $candidatureRepository)
+    public function __construct(CandidatureRepository $candidatureRepository)
     {
         $this->candidatureRepository = $candidatureRepository;
     }
@@ -49,7 +49,6 @@ class CandidatureService
   {
       return $this->candidatureRepository->repartirStatut($recruteurId);
   }
-
 
 }
 

@@ -2,13 +2,13 @@
 
 namespace App\Services;
 
-use App\Repositories\AnnonceRepositoryInterface;
+use App\Repositories\AnnonceRepository;
 
 class AnnonceService
 {
     protected $annonceRepository;
 
-    public function __construct(AnnonceRepositoryInterface $annonceRepository)
+    public function __construct(AnnonceRepository $annonceRepository)
     {
         $this->annonceRepository = $annonceRepository;
     }

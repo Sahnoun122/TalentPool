@@ -7,6 +7,9 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\AnnonceController;
 use App\Http\Controllers\API\CandidatureController;
 
+use App\Http\Controllers\API\StatistiqueController;
+
+
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
@@ -30,3 +33,8 @@ Route::delete('candidatures/{id}', [CandidatureController::class, 'destroy']);
 Route::get('annonces/{annonceId}/candidatures', [CandidatureController::class, 'index']);
 
 Route::put('candidatures/{id}/statut', [CandidatureController::class, 'modifierStatut']);
+
+
+Route::get('recruteurs/{recruteurId}/statistiques', [StatistiqueController::class, 'statistiquesRecruteur']);
+
+Route::get('admin/statistiques', [StatistiqueController::class, 'statistiquesAdmin']);
