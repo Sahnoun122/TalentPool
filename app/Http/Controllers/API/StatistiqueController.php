@@ -32,16 +32,3 @@ class StatistiqueController extends Controller
     }
 }
 
-// public function statistiquesAdmin()
-// {
-//     // Assuming you want to gather statistics for the entire application or admin-level data
-//     $nombreAnnonces = $this->annonceService->NombreAnnoncesAdmin();
-//     $nombreCandidatures = $this->candidatureService->NombreCandidaturesAdmin();
-//     $repartitionCandidatures = $this->candidatureService->CandidaturesStatutAdmin();
-
-//     return response()->json([
-//         'nombre_annonces' => $nombreAnnonces,
-//         'nombre_candidatures' => $nombreCandidatures,
-//         'repartition_candidatures' => $repartitionCandidatures,
-//     ]);
-// }

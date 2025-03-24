@@ -31,7 +31,7 @@ class AnnonceController extends Controller
             'description' => 'required|string',
             'localisation' => 'required|string|max:255',
             'salaire' => 'required|numeric',
-            'recruteur_id' => 'required|exists:recruteurs,id',
+            'recruteur_id' => 'required|exists:users,id',
         ]);
 
         $annonce = $this->annonceService->creerAnnonce($request->all());

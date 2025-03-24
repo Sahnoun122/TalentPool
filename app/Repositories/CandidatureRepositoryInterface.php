@@ -4,8 +4,8 @@ namespace App\Repositories;
 
 interface CandidatureRepositoryInterface
 {
-    public function trouverParId(int $id);
-    public function trouverParAnnonceId(int $annonceId);
-    public function AjouterCandidature(array $donnees);
-    public function supprimerCandidature(int $id);
+    public function trouverParId( $id);
+    public function trouverParAnnonceId( $annonceId);
+    public function AjouterCandidature( $donnees);
+    public function supprimerCandidature( $id);
 }
