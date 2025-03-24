@@ -7,10 +7,6 @@ use App\Repositories\AnnonceRepositoryInterface;
 
 class AnnonceRepository implements AnnonceRepositoryInterface
 {
-    public function trouverParId($id)
-    {
-        return Annonce::findOrFail($id);
-    }
 
     public function trouverToutes()
     {

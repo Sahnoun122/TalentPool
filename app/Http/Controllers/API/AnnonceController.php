@@ -23,15 +23,8 @@ class AnnonceController extends Controller
         return response()->json($annonces);
     }
 
-    // public function show(int $id)
-    // {
-    //     $annonce = $this->annonceService->trouverParId($id);
-    //     return response()->json($annonce);
-    // }
-
     public function store(Request $request)
     {
-        // $this->authorize('create', Annonce::class);
 
         $request->validate([
             'titre' => 'required|string|max:255',
