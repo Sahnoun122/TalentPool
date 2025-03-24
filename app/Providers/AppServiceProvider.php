@@ -4,11 +4,15 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use App\Models\Annonce;
+use App\Policies\AnnoncePolicy;
 
 class AppServiceProvider extends ServiceProvider
 {
  
-
+    protected $policies = [
+        Annonce::class => AnnoncePolicy::class,
+    ];
 
     public function register(): void
     {
@@ -39,10 +43,10 @@ public function boot()
 {
     $this->register();
 
-    Gate::define('est-recruteur', function ($user) {
+    Gate::define('recruteur', function ($user) {
         return $user->role === 'recruteur';
     });
-    Gate::define('est-admin', function ($user) {
+    Gate::define('admin', function ($user) {
         return $user->role === 'admin';
     });
 }
