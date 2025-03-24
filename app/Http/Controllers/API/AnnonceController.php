@@ -4,6 +4,8 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Services\AnnonceService;
 use Illuminate\Http\Request;
+// use Illuminate\Http\;
+
 
 
 class AnnonceController extends Controller
@@ -29,6 +31,8 @@ class AnnonceController extends Controller
 
     public function store(Request $request)
     {
+        // $this->authorize('create', Annonce::class);
+
         $request->validate([
             'titre' => 'required|string|max:255',
             'description' => 'required|string',
@@ -40,7 +44,6 @@ class AnnonceController extends Controller
         $annonce = $this->annonceService->creerAnnonce($request->all());
         return response()->json($annonce, 201);
     }
-
     public function update(Request $request, int $id)
     {
         $request->validate([
