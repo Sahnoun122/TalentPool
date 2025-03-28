@@ -8,17 +8,17 @@ class UserRepository implements UserRepositoryInterface
 
 
 {
-    public function register(array $data)
+    public function register( $data)
     {
         return User::create($data);
     }
 
-    public function Connecter(string $email)
+    public function Connecter( $email)
     {
         return User::where('email', $email)->first();
     }
 
-    public function modifierMotDePasse($user, string $password)
+    public function modifierMotDePasse($user, $password)
     {
         $user->password = bcrypt($password);
         $user->save();
