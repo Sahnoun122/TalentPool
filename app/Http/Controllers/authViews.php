@@ -20,6 +20,11 @@ class authViews extends Controller
         return view('auth.connecter');
     }
 
+
+    public function resetpassword()
+    {
+        return view('auth.resetpassword');
+    }
     /**
      * Show the form for creating a new resource.
      */

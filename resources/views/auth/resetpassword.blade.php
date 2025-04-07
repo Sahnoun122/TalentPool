@@ -17,7 +17,7 @@
             <p class="text-gray-600 mt-2">Entrez votre email et nouveau mot de passe</p>
         </div>
 
-        <form method="POST" action="" id="resetForm" class="space-y-6">
+        <form method="POST" action="/api/reset-password" id="resetForm" class="space-y-6">
             <div>
                 <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
                 <input type="email" id="email" name="email" required
@@ -44,7 +44,47 @@
 
         <div id="message" class="mt-4 text-center text-sm"></div>
     </div>
+    <script>
+        document.getElementById('resetForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const resetData = {
+                email: document.getElementById('email').value,
+                password: document.getElementById('password').value
+            };
 
+            const messageDiv = document.getElementById('message');
+
+            try {
+                const response = await fetch('/api/reset-password', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(resetData)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    messageDiv.textContent = 'Mot de passe réinitialisé avec succès ! Redirection...';
+                    messageDiv.className = 'mt-4 text-center text-sm text-green-600';
+                    
+                    setTimeout(() => {
+                        window.location.href = '/login';
+                    }, 2000);
+                } else {
+                    const errorMsg = data.message || data.error || 'Erreur lors de la réinitialisation';
+                    messageDiv.textContent = errorMsg;
+                    messageDiv.className = 'mt-4 text-center text-sm text-red-600';
+                }
+            } catch (error) {
+                messageDiv.textContent = 'Erreur de connexion au serveur';
+                messageDiv.className = 'mt-4 text-center text-sm text-red-600';
+                console.error('Erreur:', error);
+            }
+        });
+    </script>
  
 </body>
 </html>
