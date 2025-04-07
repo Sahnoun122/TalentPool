@@ -69,6 +69,50 @@
 
         <div id="message" class="mt-4 text-center text-sm"></div>
     </div>
+    
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const userData = {
+                nom: document.getElementById('nom').value,
+                prenom: document.getElementById('prenom').value,
+                email: document.getElementById('email').value,
+                password: document.getElementById('password').value,
+                role: document.getElementById('role').value
+            };
 
+            const messageDiv = document.getElementById('message');
+
+            try {
+                const response = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(userData)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    messageDiv.textContent = 'Inscription réussie ! Vous allez être redirigé...';
+                    messageDiv.className = 'mt-4 text-center text-sm text-green-600';
+                    
+                    setTimeout(() => {
+                        window.location.href = '/connecter';
+                    }, 2000);
+                } else {
+                    const errorMsg = data.message || data.error || 'Erreur lors de l\'inscription';
+                    messageDiv.textContent = errorMsg;
+                    messageDiv.className = 'mt-4 text-center text-sm text-red-600';
+                }
+            } catch (error) {
+                messageDiv.textContent = 'Erreur de connexion au serveur';
+                messageDiv.className = 'mt-4 text-center text-sm text-red-600';
+                console.error('Erreur:', error);
+            }
+        });
+    </script>
 </body>
 </html>
