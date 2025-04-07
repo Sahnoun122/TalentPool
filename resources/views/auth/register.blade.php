@@ -17,7 +17,7 @@
             <p class="text-gray-600 mt-2">Créez votre compte</p>
         </div>
 
-        <form id="registerForm" class="space-y-6">
+        <form method="POST" action="/api/register" id="registerForm" class="space-y-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label for="nom" class="block text-sm font-medium text-gray-700">Nom</label>
@@ -69,7 +69,7 @@
 
         <div id="message" class="mt-4 text-center text-sm"></div>
     </div>
-    
+
     <script>
         document.getElementById('registerForm').addEventListener('submit', async function(e) {
             e.preventDefault();
