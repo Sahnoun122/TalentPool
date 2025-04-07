@@ -17,7 +17,7 @@
             <p class="text-gray-600 mt-2">Accédez à votre compte</p>
         </div>
 
-        <form id="loginForm" class="space-y-6">
+        <form method="POST" action="/api/login" id="loginForm" class="space-y-6">
             <div>
                 <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
                 <input type="email" id="email" name="email" required
@@ -48,6 +48,80 @@
         <div id="message" class="mt-4 text-center text-sm"></div>
     </div>
 
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const messageDiv = document.getElementById('message');
+    
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        email: email,
+                        password: password 
+                    })
+                });
+    
+                const data = await response.json();
+    
+                if (response.ok) {
+                    localStorage.setItem('authToken', data.token);
+                    localStorage.setItem('userRole', data.user.role);
+                    
+                    messageDiv.textContent = 'Connexion réussie ! Redirection...';
+                    messageDiv.className = 'mt-4 text-center text-sm text-green-600';
+                    
+                    setTimeout(() => {
+                        const role = data.user.role; 
+                        switch(role) {
+                            case 'admin':
+                                window.location.href = 'admin-dashboard.html';
+                                break;
+                            case 'recruteur':
+                                window.location.href = 'recruiter-dashboard.html';
+                                break;
+                            case 'candidat':
+                                window.location.href = 'candidate-dashboard.html';
+                                break;
+                            default:
+                                window.location.href = 'dashboard.html';
+                        }
+                    }, 1500);
+                } else {
+                    messageDiv.textContent = data.message || 'Email ou mot de passe incorrect';
+                    messageDiv.className = 'mt-4 text-center text-sm text-red-600';
+                }
+            } catch (error) {
+                messageDiv.textContent = 'Erreur de connexion au serveur';
+                messageDiv.className = 'mt-4 text-center text-sm text-red-600';
+                console.error('Erreur:', error);
+            }
+        });
+    
+        if (localStorage.getItem('authToken')) {
+            const role = localStorage.getItem('userRole');
+            switch(role) {
+                case 'admin':
+                    window.location.href = '/admin/dashboard';
+                    break;
+                case 'recruteur':
+                    window.location.href = '/recruiter/dashboard';
+                    break;
+                case 'candidat':
+                    window.location.href = '/candidate/dashboard';
+                    break;
+                default:
+                    window.location.href = '/';
+            }
+        }
+    </script>
+ 
     
 </body>
 </html>
