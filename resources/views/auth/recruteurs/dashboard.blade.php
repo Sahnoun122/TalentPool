@@ -106,5 +106,31 @@
         </div>
     </div>
 
+
+    <script>
+        // Éléments du DOM
+const annoncesContainer = document.getElementById('annoncesContainer');
+const searchInput = document.getElementById('searchInput');
+const createBtn = document.getElementById('createBtn');
+const annonceModal = document.getElementById('annonceModal');
+const closeModal = document.getElementById('closeModal');
+const cancelBtn = document.getElementById('cancelBtn');
+const annonceForm = document.getElementById('annonceForm');
+const deleteBtn = document.getElementById('deleteBtn');
+
+let currentAnnonces = [];
+
+document.addEventListener('DOMContentLoaded', () => {
+    fetchAnnonces();
+    
+    searchInput.addEventListener('input', debounce(searchAnnonces, 300));
+    createBtn.addEventListener('click', showCreateForm);
+    closeModal.addEventListener('click', hideModal);
+    cancelBtn.addEventListener('click', hideModal);
+    annonceForm.addEventListener('submit', handleFormSubmit);
+    deleteBtn.addEventListener('click', handleDelete);
+});
+
+    </script>
 </body>
 </html>
