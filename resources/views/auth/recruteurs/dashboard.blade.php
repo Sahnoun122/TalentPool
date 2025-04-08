@@ -290,6 +290,34 @@ async function gereDelete() {
     }
 }
 
+function debounce(func, wait) {
+    let timeout;
+    return function() {
+        const context = this, args = arguments;
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            func.apply(context, args);
+        }, wait);
+    };
+}
+
+function recherecheAnnonces() {
+    const searchTerm = searchInput.value.toLowerCase();
+    if (!searchTerm) {
+        displayAnnonces(currentAnnonces);
+        return;
+    }
+    
+    const filtered = currentAnnonces.filter(annonce => 
+        annonce.titre.toLowerCase().includes(searchTerm) || 
+        annonce.description.toLowerCase().includes(searchTerm) ||
+        annonce.localisation.toLowerCase().includes(searchTerm)
+    );
+    
+    displayAnnonces(filtered);
+}
+
+window.showEditForm = showEditForm;
 
     </script>
 </body>
