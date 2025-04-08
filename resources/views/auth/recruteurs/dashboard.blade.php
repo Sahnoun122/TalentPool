@@ -131,6 +131,54 @@ document.addEventListener('DOMContentLoaded', () => {
     deleteBtn.addEventListener('click', handleDelete);
 });
 
+async function fetchAnnonces() {
+    try {
+        const response = await fetch('/api/annonces');
+        if (!response.ok) throw new Error('Erreur réseau');
+        
+        currentAnnonces = await response.json();
+        displayAnnonces(currentAnnonces);
+    } catch (error) {
+        console.error('Erreur:', error);
+        annoncesContainer.innerHTML = `
+            <div class="p-8 text-center text-red-500">
+                Erreur lors du chargement des annonces: ${error.message}
+            </div>
+        `;
+    }
+}
+
+async function createAnnonce(data) {
+    const response = await fetch('/api/annonces', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+    return await response.json();
+}
+
+async function updateAnnonce(id, data) {
+    const response = await fetch(`/api/annonces/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+    return await response.json();
+}
+
+async function deleteAnnonce(id) {
+    const response = await fetch(`/api/annonces/${id}`, {
+        method: 'DELETE'
+    });
+    return response.ok;
+}
+
     </script>
 </body>
 </html>
