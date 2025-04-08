@@ -272,6 +272,24 @@ async function gereFormSubmit(e) {
     }
 }
 
+async function gereDelete() {
+    const annonceId = document.getElementById('annonceId').value;
+    if (!annonceId || !confirm('Êtes-vous sûr de vouloir supprimer cette annonce ?')) return;
+    
+    try {
+        const success = await deleteAnnonce(annonceId);
+        if (success) {
+            hideModal();
+            fetchAnnonces();
+        } else {
+            throw new Error('Échec de la suppression');
+        }
+    } catch (error) {
+        console.error('Erreur:', error);
+        alert(`Une erreur est survenue: ${error.message}`);
+    }
+}
+
 
     </script>
 </body>
