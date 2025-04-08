@@ -48,7 +48,7 @@
             </div>
         </div>
 
-        <div id="annonceModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-50">
+        <div  id="annonceModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-50">
             <div class="bg-white rounded-xl shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
                 <div class="p-6">
                     <div class="flex justify-between items-center mb-4">
@@ -60,7 +60,7 @@
                         </button>
                     </div>
                     
-                    <form id="annonceForm" class="space-y-4">
+                    <form  method="POST" action="/api/annonces" id="annonceForm" class="space-y-4">
                         <input type="hidden" id="annonceId">
                         
                         <div>
@@ -108,7 +108,6 @@
 
 
     <script>
-        // Éléments du DOM
 const annoncesContainer = document.getElementById('annoncesContainer');
 const searchInput = document.getElementById('searchInput');
 const createBtn = document.getElementById('createBtn');
