@@ -179,6 +179,45 @@ async function deleteAnnonce(id) {
     return response.ok;
 }
 
+
+function AfficherAnnonces(annonces) {
+    if (annonces.length === 0) {
+        annoncesContainer.innerHTML = `
+            <div class="p-8 text-center text-gray-500">
+                Aucune annonce trouvée
+            </div>
+        `;
+        return;
+    }
+
+    annoncesContainer.innerHTML = annonces.map(annonce => `
+        <div class="p-6 hover:bg-gray-50 transition-colors duration-200">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div class="flex-1">
+                    <h3 class="text-lg font-semibold text-gray-800">${annonce.titre}</h3>
+                    <div class="flex items-center gap-2 mt-1 text-sm text-gray-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        <span>${annonce.localisation}</span>
+                        <span>•</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span>${annonce.salaire} €</span>
+                    </div>
+                    <p class="text-gray-500 mt-2 line-clamp-2">${annonce.description}</p>
+                </div>
+                <button onclick="showEditForm(${annonce.id})" class="px-4 py-2 bg-primary/10 text-primary rounded-md hover:bg-primary/20 transition-colors duration-200">
+                    Voir Détails
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+
     </script>
 </body>
 </html>
