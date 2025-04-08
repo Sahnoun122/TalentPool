@@ -149,7 +149,27 @@
             `;
         }
 
-      
+        async function deleteAnnonce(id) {
+            if (!confirm('Êtes-vous sûr de vouloir supprimer cette annonce ? Cette action est irréversible.')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/annonces/${id}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    alert('Annonce supprimée avec succès');
+                    window.location.href = 'gestion-annonces.html';
+                } else {
+                    throw new Error('Échec de la suppression');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert(`Une erreur est survenue: ${error.message}`);
+            }
+        }
     </script>
 </body>
 </html>
