@@ -217,6 +217,61 @@ function AfficherAnnonces(annonces) {
     `).join('');
 }
 
+function voireCreeForm() {
+    document.getElementById('modalTitle').textContent = 'Créer une annonce';
+    document.getElementById('annonceId').value = '';
+    document.getElementById('deleteBtn').classList.add('hidden');
+    annonceForm.reset();
+    annonceModal.classList.remove('hidden');
+}
+
+function voireModifierForm(id) {
+    const annonce = currentAnnonces.find(a => a.id === id);
+    if (!annonce) return;
+
+    document.getElementById('modalTitle').textContent = 'Modifier une annonce';
+    document.getElementById('annonceId').value = annonce.id;
+    document.getElementById('titre').value = annonce.titre;
+    document.getElementById('description').value = annonce.description;
+    document.getElementById('localisation').value = annonce.localisation;
+    document.getElementById('salaire').value = annonce.salaire;
+    document.getElementById('deleteBtn').classList.remove('hidden');
+    annonceModal.classList.remove('hidden');
+}
+
+function diparaitreModal() {
+    annonceModal.classList.add('hidden');
+}
+
+async function gereFormSubmit(e) {
+    e.preventDefault();
+    
+    const formData = {
+        titre: document.getElementById('titre').value,
+        description: document.getElementById('description').value,
+        localisation: document.getElementById('localisation').value,
+        salaire: parseFloat(document.getElementById('salaire').value),
+        recruteur_id: 1 // À remplacer par l'ID du recruteur connecté
+    };
+
+    const annonceId = document.getElementById('annonceId').value;
+    
+    try {
+        let result;
+        if (annonceId) {
+            result = await updateAnnonce(annonceId, formData);
+        } else {
+            result = await createAnnonce(formData);
+        }
+        
+        hideModal();
+        fetchAnnonces();
+    } catch (error) {
+        console.error('Erreur:', error);
+        alert(`Une erreur est survenue: ${error.message}`);
+    }
+}
+
 
     </script>
 </body>
