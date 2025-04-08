@@ -111,10 +111,10 @@
                     window.location.href = '/admin/dashboard';
                     break;
                 case 'recruteur':
-                    window.location.href = '/recruiter/dashboard';
+                    window.location.href = '/recruteurs/dashboard';
                     break;
                 case 'candidat':
-                    window.location.href = '/candidate/dashboard';
+                    window.location.href = '/candidatures/dashboard';
                     break;
                 default:
                     window.location.href = '/';
