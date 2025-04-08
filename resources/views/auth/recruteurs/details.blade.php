@@ -51,6 +51,28 @@
         </div>
     </div>
 
-   
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const annonceId = urlParams.get('id');
+            
+            if (!annonceId) {
+                window.location.href = '/recruteurs/dashboard';
+                return;
+            }
+
+            await loadAnnonceDetails(annonceId);
+
+            document.getElementById('editBtn').addEventListener('click', () => {
+                window.location.href = `/recruteur/dashboard?edit=${annonceId}`;
+            });
+
+            document.getElementById('deleteBtn').addEventListener('click', () => {
+                deleteAnnonce(annonceId);
+            });
+        });
+
+       
+    </script>
 </body>
 </html>
